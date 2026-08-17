@@ -116,7 +116,7 @@ export function planAll(state: WarehouseState): AllocationPlan[] {
     let rationale: string;
     if (totalShort === 0) {
       decision = "allocate-full";
-      rationale = `Full stock available. Reserved ahead of ${contested.length ? contested[0].competingOrders.join(", ") : "no competing orders"} on priority score ${p.score}.`;
+      rationale = `Full stock available. Reserved ahead of ${contested.length ? contested[0]!.competingOrders.join(", ") : "no competing orders"} on priority score ${p.score}.`;
     } else if (totalGrant > 0 && (p.band === "critical" || p.band === "high")) {
       decision = "allocate-partial";
       rationale = `Split shipment recommended: reserve ${totalGrant} units now to protect the ${p.band === "critical" ? "breaching" : "tight"} SLA, backorder ${totalShort} units against the next inbound receipt.`;
@@ -185,7 +185,7 @@ export const STAGE_FLOW: OrderStage[] = ["created", "allocated", "picking", "pac
 export function nextStage(stage: OrderStage): OrderStage | null {
   const i = STAGE_FLOW.indexOf(stage);
   if (i < 0 || i === STAGE_FLOW.length - 1) return null;
-  return STAGE_FLOW[i + 1];
+  return STAGE_FLOW[i + 1] ?? null;
 }
 
 export interface Bottleneck {
@@ -203,7 +203,7 @@ export function bottlenecks(state: WarehouseState): Bottleneck[] {
       stage,
       count: inStage.length,
       atRisk,
-      label: stage === "created" ? "Awaiting allocation" : stage[0].toUpperCase() + stage.slice(1),
+      label: stage === "created" ? "Awaiting allocation" : stage[0]!.toUpperCase() + stage.slice(1),
     };
   });
 }
