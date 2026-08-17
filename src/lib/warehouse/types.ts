@@ -44,8 +44,8 @@ export interface Order {
   value: number;
   lines: OrderLine[];
   stage: OrderStage;
-  picker?: string;
-  note?: string;
+  note?: string | undefined;
+  picker?: string | undefined;
 }
 
 export interface EventLog {
