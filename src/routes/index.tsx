@@ -117,7 +117,7 @@ function ControlTower() {
                   </p>
 
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <button
+                    {plan.lines.reduce((s, l) => s + l.grantable, 0) > 0 && <button
                       onClick={() => {
                         dispatch({ type: "allocate", orderId: order.id, mode: plan.fullyAllocatable ? "full" : "partial" });
                         toast.success(`Applied: ${plan.decision}`, { description: plan.rationale });
@@ -126,7 +126,7 @@ function ControlTower() {
                     >
                       {plan.fullyAllocatable ? <ArrowRight className="size-3.5" /> : <Split className="size-3.5" />}
                       {plan.fullyAllocatable ? "Allocate in full" : `Split: reserve ${plan.lines.reduce((s, l) => s + l.grantable, 0)}`}
-                    </button>
+                    </button>}
                     <button
                       onClick={() => {
                         dispatch({ type: "allocate", orderId: order.id, mode: "backorder" });
