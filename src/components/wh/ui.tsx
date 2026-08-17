@@ -5,7 +5,7 @@ export function Panel({ className, children }: { className?: string; children: R
   return <section className={cn("panel", className)}>{children}</section>;
 }
 
-export function PanelHead({ title, sub, right }: { title: string; sub?: string; right?: ReactNode }) {
+export function PanelHead({ title, sub, right }: { title: string; sub?: string | undefined; right?: ReactNode | undefined }) {
   return (
     <header className="flex items-start justify-between gap-4 border-b border-border px-4 py-3">
       <div>
